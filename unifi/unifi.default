@@ -1,0 +1,7 @@
+# Override default value for Unifi Controller parameters
+
+JVM_MAX_HEAP_SIZE=
+
+UNIFI_JVM_EXTRA_OPTS="-XX:MaxRAMFraction=2 -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+
+JSVC_EXTRA_OPTS="-nodetach -keepstdin"
