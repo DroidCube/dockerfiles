@@ -1,6 +1,6 @@
 FROM alpine
 
-ENV OCSERV_VERSION=1.1.2
+ARG OCSERV_VERSION=1.1.3
 ENV OCSERV_URL=ftp://ftp.infradead.org/pub/ocserv/ocserv-$OCSERV_VERSION.tar.xz
 
 COPY ./96865171.asc /usr/src/
