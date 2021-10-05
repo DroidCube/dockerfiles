@@ -3,6 +3,9 @@ FROM alpine
 ENV OCSERV_VERSION=1.1.2
 ENV OCSERV_URL=ftp://ftp.infradead.org/pub/ocserv/ocserv-$OCSERV_VERSION.tar.xz
 
+COPY ./96865171.asc /usr/src/
+COPY *.sh /sbin/
+
 RUN set -ex ; \
     apk add --update --virtual .build-deps \
         curl \
@@ -23,7 +26,7 @@ RUN set -ex ; \
     curl -SL $OCSERV_URL -o /ocserv.tar.xz ; \
     curl -SL $OCSERV_URL.sig -o /ocserv.tar.xz.sig ; \
     #gpg --keyserver pgp.mit.edu --recv-key 96865171 ; \
-    gpg --keyserver pool.sks-keyservers.net --recv-key 29EE58B996865171 ; \
+    gpg --import /usr/src/96865171.asc ; \
     gpg --verify /ocserv.tar.xz.sig ; \
     mkdir -p /usr/src/ocserv ; \
     tar -xf /ocserv.tar.xz -C /usr/src/ocserv --strip-components=1 ; \
@@ -39,8 +42,6 @@ RUN set -ex ; \
     apk add --virtual .run-deps $runDeps gnutls-utils iptables ; \
     apk del .build-deps ; \
     rm -rf /var/cache/apk/*
-
-COPY *.sh /sbin/
 
 # VPN address pool
 ENV VPN_NETWORK=192.168.255.0/24
